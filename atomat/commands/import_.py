@@ -10,17 +10,17 @@ class Atom(rend.Page):
         'html'))
 
     def data_feed(self, ctx, data):
-        return {'updated': 'foo',
+        return {'updated': '2005-10-21T18:30:02Z',
                 'entries': [
             {'id': 'foo',
-             'title': 'foo',
-             'updated': 'foo',
+             'title': 'Foo',
+             'updated': '2005-09-30T12:03:00Z',
              'content': 'foo',
              },
-            {'id': 'foo',
-             'title': 'foo',
-             'updated': 'foo',
-             'content': 'foo',
+            {'id': 'bar',
+             'title': 'Bar',
+             'updated': '2005-10-21T18:30:02Z',
+             'content': 'bar',
              },
             ],
                 }

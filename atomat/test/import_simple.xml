@@ -2,7 +2,7 @@
 
   <title>Tv's Cobweb</title>
   <link href="http://tv.debian.net/" />
-  <updated>foo</updated>
+  <updated>2005-10-21T18:30:02Z</updated>
   <author>
     <name>Tommi Virtanen</name>
     <email>tv@debian.org</email>
@@ -11,14 +11,14 @@
 
   <entry>
       <id>foo</id>
-      <title>foo</title>
-      <updated>foo</updated>
+      <title>Foo</title>
+      <updated>2005-09-30T12:03:00Z</updated>
       <content>foo</content>
     </entry><entry>
-      <id>foo</id>
-      <title>foo</title>
-      <updated>foo</updated>
-      <content>foo</content>
+      <id>bar</id>
+      <title>Bar</title>
+      <updated>2005-10-21T18:30:02Z</updated>
+      <content>bar</content>
     </entry>
 
 </feed>
