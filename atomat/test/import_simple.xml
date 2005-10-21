@@ -1,0 +1,24 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>Tv's Cobweb</title>
+  <link href="http://tv.debian.net/" />
+  <updated>foo</updated>
+  <author>
+    <name>Tommi Virtanen</name>
+    <email>tv@debian.org</email>
+  </author>
+  <id>http://tv.debian.net/</id>
+
+  <entry>
+      <id>foo</id>
+      <title>foo</title>
+      <updated>foo</updated>
+      <content>foo</content>
+    </entry><entry>
+      <id>foo</id>
+      <title>foo</title>
+      <updated>foo</updated>
+      <content>foo</content>
+    </entry>
+
+</feed>

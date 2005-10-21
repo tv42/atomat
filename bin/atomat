@@ -1,0 +1,8 @@
+#!/usr/bin/python
+import sys
+from atomat.main import runApp
+
+if __name__=='__main__':
+    runApp(sys.argv[1:],
+           appname=sys.argv[0],
+           )

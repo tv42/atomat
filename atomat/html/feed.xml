@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"
+      xmlns:nevow="http://nevow.com/ns/nevow/0.1"
+      nevow:render="mapping" nevow:data="feed">
+
+  <title>Tv's Cobweb</title>
+  <link href="http://tv.debian.net/"/>
+  <updated><nevow:slot name="updated"/></updated>
+  <author>
+    <name>Tommi Virtanen</name>
+    <email>tv@debian.org</email>
+  </author>
+  <id>http://tv.debian.net/</id>
+
+  <nevow:invisible nevow:render="sequence" nevow:data="entries">
+    <entry nevow:pattern="item" nevow:render="mapping">
+      <id><nevow:slot name="id"/></id>
+      <title><nevow:slot name="title"/></title>
+      <updated><nevow:slot name="updated"/></updated>
+      <content><nevow:slot name="content"/></content>
+    </entry>
+  </nevow:invisible>
+
+</feed>
