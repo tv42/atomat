@@ -3,6 +3,30 @@ from xml.dom import minidom
 import xml.dom
 from atomat import atom, xhtmlutil
 
+from docutils.parsers import rst
+from docutils import nodes, utils, io
+from cStringIO import StringIO
+from twisted.python import htmlizer
+
+def python(name, arguments, options, content, lineno,
+           content_offset, block_text, state, state_machine):
+    inp = StringIO('\n'.join(content).encode('utf-8'))
+    outp = StringIO()
+    htmlizer.filter(inp, outp, writer=htmlizer.SmallerHTMLWriter)
+    html = outp.getvalue()
+    return [nodes.raw('', html, format='html')]
+python.content = 1
+
+rst.directives.register_directive('python', python)
+
+def comment(name, arguments, options, content, lineno,
+            content_offset, block_text, state, state_machine):
+    pass
+comment.content = 1
+
+rst.directives.register_directive('comment', comment)
+
+
 def convertString(rst, **kw):
     """Convert reStructuredText to iatom.IEntry."""
 
