@@ -1,4 +1,5 @@
 from zope.interface import Interface, Attribute, Invalid, invariant
+from nevow import inevow, accessors, compy
 
 class RequiredAttributeMissingError(Invalid):
     """Missing required attribute"""
@@ -165,3 +166,5 @@ class IEntry(Interface):
     #TODO published
     #TODO source
     #TODO rights
+
+compy.registerAdapter(accessors.ObjectContainer, IEntry, inevow.IContainer)

@@ -1,7 +1,20 @@
 import sys, os
 from twisted.python import usage
-from nevow import rend, loaders
+from nevow import rend, loaders, tags
 import atomat
+from atomat import rst2entry
+
+def readEntries(path):
+    for filename in os.listdir(path):
+        if (filename.startswith('.')
+            or filename.startswith('#')):
+            continue
+        if not filename.endswith('.rst'):
+            continue
+        f = file(os.path.join(path, filename))
+        s = f.read()
+        f.close()
+        yield rst2entry.convertString(s, id=filename[:-len('.rst')])
 
 class Atom(rend.Page):
     docFactory = loaders.xmlfile('feed.xml',
@@ -9,21 +22,17 @@ class Atom(rend.Page):
         os.path.split(os.path.abspath(atomat.__file__))[0],
         'html'))
 
+    def __init__(self, src):
+        self.src = src
+        super(Atom, self).__init__()
+
     def data_feed(self, ctx, data):
         return {'updated': '2005-10-21T18:30:02Z',
-                'entries': [
-            {'id': 'foo',
-             'title': 'Foo',
-             'updated': '2005-09-30T12:03:00Z',
-             'content': 'foo',
-             },
-            {'id': 'bar',
-             'title': 'Bar',
-             'updated': '2005-10-21T18:30:02Z',
-             'content': 'bar',
-             },
-            ],
+                'entries': readEntries(self.src),
                 }
+
+    def render_dom(self, ctx, data):
+        return ctx.tag.clear()[tags.xml(data.dom.toxml())]
 
 OUTPUT = sys.stdout
 
@@ -42,7 +51,7 @@ class Import(usage.Options):
         OUTPUT.write('\n') # I want a final newline in there.
 
     def run(self):
-        a = Atom()
+        a = Atom(self.src)
         d = a.renderString()
         d.addCallback(self._print)
         return d

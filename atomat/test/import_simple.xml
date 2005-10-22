@@ -10,15 +10,15 @@
   <id>http://tv.debian.net/</id>
 
   <entry>
-      <id>foo</id>
+      <id>2005-09-30_foo</id>
       <title>Foo</title>
       <updated>2005-09-30T12:03:00Z</updated>
-      <content>foo</content>
+      <content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">foo</div></content>
     </entry><entry>
-      <id>bar</id>
+      <id>2005-10-21_bar</id>
       <title>Bar</title>
       <updated>2005-10-21T18:30:02Z</updated>
-      <content>bar</content>
+      <content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml">bar</div></content>
     </entry>
 
 </feed>

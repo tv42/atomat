@@ -13,11 +13,11 @@
   <id>http://tv.debian.net/</id>
 
   <nevow:invisible nevow:render="sequence" nevow:data="entries">
-    <entry nevow:pattern="item" nevow:render="mapping">
-      <id><nevow:slot name="id"/></id>
-      <title><nevow:slot name="title"/></title>
-      <updated><nevow:slot name="updated"/></updated>
-      <content><nevow:slot name="content"/></content>
+    <entry nevow:pattern="item">
+      <id nevow:render="string" nevow:data="id">TODO</id>
+      <title nevow:render="string" nevow:data="title">TODO</title>
+      <updated nevow:render="string" nevow:data="updated">TODO</updated>
+      <content type="xhtml" nevow:render="dom" nevow:data="content">TODO</content>
     </entry>
   </nevow:invisible>
 

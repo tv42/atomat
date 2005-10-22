@@ -30,6 +30,8 @@ bar
 Bar
 ===
 
+:updated: 2005-10-21T18:30:02Z
+
 bar
 
 baz

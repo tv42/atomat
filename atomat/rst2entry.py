@@ -24,9 +24,23 @@ def convertString(rst, **kw):
             h1.parentNode.removeChild(h1)
             break
 
-    # kill .docinfo
+    # kill .docinfo, but store the data
+    metadata = {}
     for docinfo in xhtmlutil.getElementsByClass(doc, 'docinfo'):
+        for field in xhtmlutil.getElementsByClass(docinfo, 'field'):
+            nameElem = xhtmlutil.only(xhtmlutil.getElementsByClass(field, 'docinfo-name'))
+            name = xhtmlutil.getNodeContentsAsText(nameElem)
+            name = name.rstrip(':')
+
+            bodyElem = xhtmlutil.only(xhtmlutil.getElementsByClass(field, 'field-body'))
+            body = xhtmlutil.getNodeContentsAsText(bodyElem)
+
+            metadata[name] = body
         docinfo.parentNode.removeChild(docinfo)
+
+    if not metadata.get('updated', None):
+        raise RuntimeError("Metadata field 'updated' not set.")
+    # TODO parse and enforce formatting
 
     xhtmlutil.removeClass(doc, 'document')
 
@@ -51,7 +65,7 @@ def convertString(rst, **kw):
         newdoc.firstChild.appendChild(doc.firstChild)
     content = atom.XHTMLContent(newdoc.firstChild)
 
-    e = atom.Entry(updated='2005-10-21T18:30:02Z',
+    e = atom.Entry(updated=metadata['updated'],
                    title=title,
                    content=content,
                    **kw)
