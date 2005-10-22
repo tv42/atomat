@@ -62,6 +62,7 @@ def convertString(rst, **kw):
             metadata[name] = body
         docinfo.parentNode.removeChild(docinfo)
 
+    metadata.setdefault('updated', metadata.get('published', None))
     if not metadata.get('updated', None):
         raise RuntimeError("Metadata field 'updated' not set.")
     # TODO parse and enforce formatting
