@@ -34,6 +34,9 @@ class Atom(rend.Page):
     def render_dom(self, ctx, data):
         return ctx.tag.clear()[tags.xml(data.dom.toxml())]
 
+    def render_timestamp(self, ctx, data):
+        return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%SZ')]
+
 OUTPUT = sys.stdout
 
 class Import(usage.Options):

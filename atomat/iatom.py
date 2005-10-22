@@ -1,4 +1,5 @@
 from zope.interface import Interface, Attribute, Invalid, invariant
+import datetime
 from nevow import inevow, accessors, compy
 
 class RequiredAttributeMissingError(Invalid):
@@ -20,11 +21,24 @@ def required(attr):
             raise RequiredAttributeMissingError(obj, attr)
     return required_invariant
 
-def rfc3339time(attr):
-    def timeformat_invariant(obj):
-        time = getattr(obj, attr, None)
-        #TODO
-    return timeformat_invariant
+
+class NotDateTimeError(Invalid):
+    """Value is not of type datetime.datetime"""
+
+    def __init__(self, value):
+        Invalid.__init__(self)
+        self.value = value
+
+    def __repr__(self):
+        return "%s: %r." % (self.__doc__,
+                            self.value)
+
+def isdatetime(attr):
+    def isdatetime_invariant(obj):
+        val = getattr(obj, attr, None)
+        if not isinstance(val, datetime.datetime):
+            raise NotDateTimeError(val)
+    return isdatetime_invariant
 
 class MustProvideError(Invalid):
     """Object must provide interface"""
@@ -82,7 +96,7 @@ class IFeed(Interface):
     updated = Attribute("Indicates the last time the feed was modified "
                         + "in a significant way.""")
     invariant(required('updated'))
-    invariant(rfc3339time('updated'))
+    invariant(isdatetime('updated'))
     #TODO use datetime
 
     #### recommended
@@ -146,7 +160,7 @@ class IEntry(Interface):
     updated = Attribute("Indicates the last time the entry was modified "
                         + "in a significant way.""")
     invariant(required('updated'))
-    invariant(rfc3339time('updated'))
+    invariant(isdatetime('updated'))
     #TODO use datetime
 
 

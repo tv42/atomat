@@ -1,7 +1,7 @@
 from docutils.core import publish_string
 from xml.dom import minidom
 import xml.dom
-from atomat import atom, xhtmlutil
+from atomat import atom, xhtmlutil, datatypes
 
 from docutils.parsers import rst
 from docutils import nodes, utils, io
@@ -62,10 +62,15 @@ def convertString(rst, **kw):
             metadata[name] = body
         docinfo.parentNode.removeChild(docinfo)
 
+    for attr in ['updated', 'published']:
+        val = metadata.get(attr, None)
+        if val is not None:
+            val = datatypes.DateTime().coerce(val, None)
+            metadata[attr] = val
+
     metadata.setdefault('updated', metadata.get('published', None))
     if not metadata.get('updated', None):
         raise RuntimeError("Metadata field 'updated' not set.")
-    # TODO parse and enforce formatting
 
     xhtmlutil.removeClass(doc, 'document')
 

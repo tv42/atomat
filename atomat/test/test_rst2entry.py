@@ -1,4 +1,5 @@
 from twisted.trial import unittest
+import datetime
 from atomat import iatom, rst2entry
 
 class Convert(unittest.TestCase):
@@ -18,7 +19,7 @@ bar
 
         self.assertEquals(got.id, 'xyzzy')
         self.assertEquals(got.title, 'Bar')
-        self.assertEquals(got.updated, '2005-10-21T18:30:02Z')
+        self.assertEquals(got.updated, datetime.datetime(2005, 10, 21, 18, 30, 2))
         self.failUnless(iatom.IContent.providedBy(got.content), "content must provide IContent")
 
         self.assertEquals(got.content.dom.toxml(), u'<div xmlns="http://www.w3.org/1999/xhtml">bar</div>')

@@ -16,7 +16,7 @@
     <entry nevow:pattern="item">
       <id nevow:render="string" nevow:data="id">TODO</id>
       <title nevow:render="string" nevow:data="title">TODO</title>
-      <updated nevow:render="string" nevow:data="updated">TODO</updated>
+      <updated nevow:render="timestamp" nevow:data="updated">TODO</updated>
       <content type="xhtml" nevow:render="dom" nevow:data="content">TODO</content>
     </entry>
   </nevow:invisible>
