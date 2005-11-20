@@ -12,7 +12,9 @@ def python(name, arguments, options, content, lineno,
            content_offset, block_text, state, state_machine):
     inp = StringIO('\n'.join(content).encode('utf-8'))
     outp = StringIO()
+    outp.write('<div class="py-listing">')
     htmlizer.filter(inp, outp, writer=htmlizer.SmallerHTMLWriter)
+    outp.write('</div>')
     html = outp.getvalue()
     return [nodes.raw('', html, format='html')]
 python.content = 1
