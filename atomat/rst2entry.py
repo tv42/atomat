@@ -1,6 +1,7 @@
 from docutils.core import publish_string
 from xml.dom import minidom
 import xml.dom
+import email.Utils
 from atomat import atom, xhtmlutil, datatypes
 
 from docutils.parsers import rst
@@ -82,6 +83,13 @@ def convertString(rst, **kw):
     metadata.setdefault('updated', metadata.get('published', None))
     if not metadata.get('updated', None):
         raise RuntimeError("Metadata field 'updated' not set.")
+
+    # split author to separate name and email
+    if 'author' in metadata:
+        realname, address = email.Utils.parseaddr(metadata['author'])
+        metadata['author'] = {'name': realname,
+                              'email': address,
+                              }
 
     xhtmlutil.removeClass(doc, 'document')
 

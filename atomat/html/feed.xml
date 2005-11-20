@@ -6,9 +6,9 @@
   <title nevow:render="data" nevow:data="title">TODO</title>
   <link href="TODO"><nevow:attr name="href" nevow:render="data" nevow:data="id"/></link>
   <updated nevow:render="timestamp" nevow:data="updated">2005-11-20T10:32:42Z</updated>
-  <author>
-    <name>Tommi Virtanen</name>
-    <email>tv@debian.org</email>
+  <author nevow:data="author">
+    <name nevow:render="data" nevow:data="name">Firstname Lastname</name>
+    <email nevow:render="data" nevow:data="email">someone@somewhere.invalid</email>
   </author>
   <id nevow:render="data" nevow:data="id">TODO</id>
 

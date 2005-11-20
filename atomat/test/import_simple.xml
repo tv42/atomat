@@ -4,8 +4,8 @@
   <link href="http://example.com/~jdoe/blog" />
   <updated>2005-10-21T18:30:02Z</updated>
   <author>
-    <name>Tommi Virtanen</name>
-    <email>tv@debian.org</email>
+    <name>John Doe</name>
+    <email>jdoe@example.com</email>
   </author>
   <id>http://example.com/~jdoe/blog</id>
 
