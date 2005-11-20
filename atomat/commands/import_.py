@@ -23,6 +23,10 @@ def readFeed(path):
     f.close()
     atom = rst2entry.convertString(s)
     atom.entries = list(readEntries(path))
+    # newest-first is often wanted for website output,
+    # so let's just default to that
+    atom.entries.sort()
+    atom.entries.reverse()
     return atom
 
 class Atom(rend.Page):
