@@ -59,6 +59,15 @@ def convertString(rst, **kw):
             name = name.rstrip(':')
 
             bodyElem = xhtmlutil.only(xhtmlutil.getElementsByClass(field, 'field-body'))
+
+            # if what is left is a single <a>, the content is a URL,
+            # autolinkified by reStructuredText. Grab it's contents
+            # but not the <a>
+            if (len(bodyElem.childNodes) == 1
+                and bodyElem.firstChild.nodeType == bodyElem.ELEMENT_NODE
+                and bodyElem.firstChild.tagName == 'a'):
+                bodyElem = bodyElem.firstChild
+
             body = xhtmlutil.getNodeContentsAsText(bodyElem)
 
             metadata[name] = body
@@ -97,8 +106,8 @@ def convertString(rst, **kw):
         newdoc.firstChild.appendChild(doc.firstChild)
     content = atom.XHTMLContent(newdoc.firstChild)
 
-    e = atom.Entry(updated=metadata['updated'],
-                   title=title,
+    kw.update(metadata)
+    e = atom.Entry(title=title,
                    content=content,
                    **kw)
     return e

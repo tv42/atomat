@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"
       xmlns:nevow="http://nevow.com/ns/nevow/0.1"
-      nevow:render="mapping" nevow:data="feed">
+      nevow:data="feed">
 
-  <title><nevow:slot name="title"/></title>
-  <link href="http://tv.debian.net/"/>
-  <updated><nevow:slot name="updated"/></updated>
+  <title nevow:render="data" nevow:data="title">TODO</title>
+  <link href="TODO"><nevow:attr name="href" nevow:render="data" nevow:data="id"/></link>
+  <updated nevow:render="timestamp" nevow:data="updated">2005-11-20T10:32:42Z</updated>
   <author>
     <name>Tommi Virtanen</name>
     <email>tv@debian.org</email>
   </author>
-  <id>http://tv.debian.net/</id>
+  <id nevow:render="data" nevow:data="id">TODO</id>
 
   <nevow:invisible nevow:render="sequence" nevow:data="entries">
     <entry nevow:pattern="item">

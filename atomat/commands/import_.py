@@ -7,7 +7,8 @@ from atomat import rst2entry
 def readEntries(path):
     for filename in os.listdir(path):
         if (filename.startswith('.')
-            or filename.startswith('#')):
+            or filename.startswith('#')
+            or filename.startswith('_')):
             continue
         if not filename.endswith('.rst'):
             continue
@@ -15,6 +16,14 @@ def readEntries(path):
         s = f.read()
         f.close()
         yield rst2entry.convertString(s, id=filename[:-len('.rst')])
+
+def readFeed(path):
+    f = file(os.path.join(path, '_feed.rst'))
+    s = f.read()
+    f.close()
+    atom = rst2entry.convertString(s)
+    atom.entries = list(readEntries(path))
+    return atom
 
 class Atom(rend.Page):
     docFactory = loaders.xmlfile('feed.xml',
@@ -27,10 +36,7 @@ class Atom(rend.Page):
         super(Atom, self).__init__()
 
     def data_feed(self, ctx, data):
-        return {'updated': '2005-10-21T18:30:02Z',
-                'entries': readEntries(self.src),
-                'title': "Tv's Cobweb",
-                }
+        return readFeed(self.src)
 
     def render_dom(self, ctx, data):
         return ctx.tag.clear()[tags.xml(data.dom.toxml())]
