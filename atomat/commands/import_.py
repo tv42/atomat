@@ -4,7 +4,7 @@ from nevow import rend, loaders
 import atomat
 from atomat import rst2entry
 
-def readEntries(path):
+def readEntries(path, feedId):
     for filename in os.listdir(path):
         if (filename.startswith('.')
             or filename.startswith('#')
@@ -15,14 +15,14 @@ def readEntries(path):
         f = file(os.path.join(path, filename))
         s = f.read()
         f.close()
-        yield rst2entry.convertString(s, id=filename[:-len('.rst')])
+        yield rst2entry.convertString(s, id='%s#%s' % (feedId, filename[:-len('.rst')]))
 
 def readFeed(path):
     f = file(os.path.join(path, '_feed.rst'))
     s = f.read()
     f.close()
     atom = rst2entry.convertString(s)
-    atom.entries = list(readEntries(path))
+    atom.entries = list(readEntries(path, atom.id))
     # newest-first is often wanted for website output,
     # so let's just default to that
     atom.entries.sort()

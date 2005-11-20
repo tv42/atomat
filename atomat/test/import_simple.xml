@@ -10,7 +10,7 @@
   <id>http://example.com/~jdoe/blog</id>
 
   <entry>
-      <id>2005-10-21_bar</id>
+      <id>http://example.com/~jdoe/blog#2005-10-21_bar</id>
       <title>Bar</title>
       <author>
 	  <name>Jack Smith</name>
@@ -22,7 +22,7 @@
 	<div xmlns="http://www.w3.org/1999/xhtml">bar</div>
       </content>
     </entry><entry>
-      <id>2005-09-30_foo</id>
+      <id>http://example.com/~jdoe/blog#2005-09-30_foo</id>
       <title>Foo</title>
       
       <updated>2005-09-30T12:03:00Z</updated>
