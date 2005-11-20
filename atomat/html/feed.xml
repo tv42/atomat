@@ -6,10 +6,12 @@
   <title nevow:render="data" nevow:data="title">TODO</title>
   <link href="TODO"><nevow:attr name="href" nevow:render="data" nevow:data="id"/></link>
   <updated nevow:render="timestamp" nevow:data="updated">2005-11-20T10:32:42Z</updated>
-  <author nevow:data="author">
+  <nevow:invisible nevow:render="if" nevow:data="author">
+  <author nevow:pattern="True">
     <name nevow:render="data" nevow:data="name">Firstname Lastname</name>
     <email nevow:render="data" nevow:data="email">someone@somewhere.invalid</email>
   </author>
+  </nevow:invisible>
   <id nevow:render="data" nevow:data="id">TODO</id>
 
   <nevow:invisible nevow:render="sequence" nevow:data="entries">

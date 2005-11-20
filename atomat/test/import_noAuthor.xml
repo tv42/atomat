@@ -1,0 +1,11 @@
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title>Test feed</title>
+  <link href="http://example.com/~jdoe/blog" />
+  <updated>2005-10-21T18:30:02Z</updated>
+  
+  <id>http://example.com/~jdoe/blog</id>
+
+  
+
+</feed>
