@@ -5,7 +5,7 @@ import email.Utils
 from atomat import atom, xhtmlutil, datatypes
 
 from docutils.parsers import rst
-from docutils import nodes, utils, io
+from docutils import nodes
 from cStringIO import StringIO
 from twisted.python import htmlizer
 

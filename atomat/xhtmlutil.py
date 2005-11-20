@@ -1,5 +1,4 @@
 from xml.dom import minidom
-from cStringIO import StringIO
 
 def getOnlyElementByTagName(iNode, name):
     elem = iNode.getElementsByTagName(name)
