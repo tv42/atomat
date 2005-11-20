@@ -35,12 +35,16 @@ class Atom(rend.Page):
         os.path.split(os.path.abspath(atomat.__file__))[0],
         'html'))
 
-    def __init__(self, src):
-        self.src = src
-        super(Atom, self).__init__()
+    path = None
+
+    def __init__(self, **kwargs):
+        path = kwargs.pop('path', None)
+        if path is not None:
+            self.path = path
+        super(Atom, self).__init__(**kwargs)
 
     def data_feed(self, ctx, data):
-        return readFeed(self.src)
+        return readFeed(self.path)
 
     def render_dom(self, ctx, data):
         return ctx.tag.clear()[tags.xml(data.dom.toxml())]
@@ -57,19 +61,19 @@ OUTPUT = sys.stdout
 class Import(usage.Options):
     """Convert a tree of files to Atom"""
 
-    src = None
+    path = None
 
-    def parseArgs(self, src=None):
-        if src is None:
+    def parseArgs(self, path=None):
+        if path is None:
             raise usage.UsageError, "source directory is missing"
-        self.src = src
+        self.path = path
 
     def _print(self, result):
         OUTPUT.write(result)
         OUTPUT.write('\n') # I want a final newline in there.
 
     def run(self):
-        a = Atom(self.src)
+        a = Atom(path=self.path)
         d = a.renderString()
         d.addCallback(self._print)
         return d
