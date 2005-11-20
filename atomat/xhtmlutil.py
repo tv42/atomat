@@ -17,14 +17,12 @@ def getTitle(top):
     return title
 
 def getNodeContentsAsText(node):
-    buf = StringIO()
+    l = []
     for t in node.childNodes:
-        assert (isinstance(t, minidom.Text)
-                or isinstance(t, minidom.Entity)), \
-                "Node contents must be text: %r" % t
-        t.writexml(buf)
-    s = buf.getvalue()
-    return s
+        assert isinstance(t, minidom.Text), \
+               "Node contents must be text: %r" % t
+        l.append(t.data)
+    return u''.join(l).encode('utf-8')
 
 def getBody(top):
     html = getOnlyElementByTagName(top, 'html')
