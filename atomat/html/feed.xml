@@ -16,8 +16,8 @@
 
   <nevow:invisible nevow:render="sequence" nevow:data="entries">
     <entry nevow:pattern="item">
-      <id nevow:render="string" nevow:data="id">TODO</id>
-      <title nevow:render="string" nevow:data="title">TODO</title>
+      <id nevow:render="data" nevow:data="id">TODO</id>
+      <title nevow:render="data" nevow:data="title">TODO</title>
       <updated nevow:render="timestamp" nevow:data="updated">TODO</updated>
       <content type="xhtml" nevow:render="dom" nevow:data="content">TODO</content>
     </entry>
