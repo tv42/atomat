@@ -38,3 +38,15 @@ class Entry(object):
             val = kw.pop(attr, None)
             if val is not None:
                 setattr(self, attr, val)
+
+    def __repr__(self):
+        attrs = []
+        for attr in dir(self):
+            if attr.startswith('_'):
+                continue
+            val = getattr(self, attr)
+            if val is None:
+                continue
+            attrs.append('%s=%r' % (attr, val))
+        return '%s(%s)' % (self.__class__.__name__,
+                           ', '.join(attrs))
