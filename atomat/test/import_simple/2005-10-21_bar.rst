@@ -3,5 +3,6 @@ Bar
 
 :updated: 2005-10-21T18:30:02Z
 :published: 2005-10-21T18:02:00Z
+:author: Jack Smith <jack@example.org>
 
 bar

@@ -18,6 +18,12 @@
     <entry nevow:pattern="item">
       <id nevow:render="data" nevow:data="id">TODO</id>
       <title nevow:render="data" nevow:data="title">TODO</title>
+      <nevow:invisible nevow:render="if" nevow:data="author">
+	<author nevow:pattern="True">
+	  <name nevow:render="data" nevow:data="name">Firstname Lastname</name>
+	  <email nevow:render="data" nevow:data="email">firstname.lastname@example.com</email>
+	</author>
+      </nevow:invisible>
       <updated nevow:render="timestamp" nevow:data="updated">TODO</updated>
       <nevow:invisible nevow:render="if" nevow:data="published">
 	<published nevow:pattern="True" nevow:render="timestamp"/>
