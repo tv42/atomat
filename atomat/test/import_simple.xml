@@ -1,7 +1,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title>Test feed</title>
-  <link href="http://example.com/~jdoe/blog" />
+  <link href="http://example.com/~jdoe/blog/atom.xml" rel="self" />
   <updated>2005-10-21T18:30:02Z</updated>
   <author>
     <name>John Doe</name>

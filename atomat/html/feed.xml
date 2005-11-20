@@ -4,7 +4,9 @@
       nevow:data="feed">
 
   <title nevow:render="data" nevow:data="title">TODO</title>
-  <link href="TODO"><nevow:attr name="href" nevow:render="data" nevow:data="id"/></link>
+  <nevow:invisible nevow:render="if" nevow:data="link">
+    <link nevow:pattern="True" rel="self" href="TODO"><nevow:attr name="href" nevow:render="data" /></link>
+  </nevow:invisible>
   <updated nevow:render="timestamp" nevow:data="updated">2005-11-20T10:32:42Z</updated>
   <nevow:invisible nevow:render="if" nevow:data="author">
   <author nevow:pattern="True">

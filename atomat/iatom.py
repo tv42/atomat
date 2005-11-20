@@ -102,7 +102,7 @@ class IFeed(Interface):
     #### recommended
     #TODO author
 
-    #TODO link
+    #TODO link -- what about rel?
 
     #### optional
     #TODO category
