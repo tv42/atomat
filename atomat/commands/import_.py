@@ -60,6 +60,11 @@ class Import(usage.Options):
 
     path = None
 
+    optParameters = [
+        ('template', None, None,
+         'Nevow template file to use.'),
+        ]
+
     def parseArgs(self, path=None):
         if path is None:
             raise usage.UsageError, "source directory is missing"
@@ -70,7 +75,15 @@ class Import(usage.Options):
         OUTPUT.write('\n') # I want a final newline in there.
 
     def run(self):
-        a = Atom(path=self.path)
+        kwargs = {
+            'path': self.path,
+            }
+
+        template = self.get('template', None)
+        if template is not None:
+            kwargs['docFactory'] = loaders.xmlfile(template)
+
+        a = Atom(**kwargs)
         d = a.renderString()
         d.addCallback(self._print)
         return d
