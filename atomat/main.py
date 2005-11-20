@@ -1,5 +1,6 @@
 import os, sys
-from twisted.python import usage
+from twisted.python import usage, log
+from twisted.internet import defer, reactor
 from twisted import plugin
 from atomat import iatomat, cliplug
 
@@ -45,12 +46,18 @@ def main(args, appname=None):
         print >>sys.stderr, '%s: Try --help for usage details.' % n
         sys.exit(1)
     opts = cliplug.getActiveSubcommand(opts)
-    opts.run()
+    d = defer.maybeDeferred(opts.run)
+    return d
 
 def runApp(*a, **kw):
-    try:
-        main(*a, **kw)
-    except KeyboardInterrupt:
-        n = cliplug.getCmdName()
-        print >>sys.stderr, '%s: interrupted.' % n
-        sys.exit(1)
+    def cb():
+        """
+        Delay things so that if d triggers immediately,
+        reactor.stop is not called before reactor.run.
+        """
+        d = main(*a, **kw)
+        d.addErrback(log.err)
+        d.addBoth(lambda _: reactor.stop())
+    reactor.callLater(0, cb)
+    reactor.run()
+
