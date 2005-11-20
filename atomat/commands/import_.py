@@ -1,6 +1,6 @@
 import sys, os
 from twisted.python import usage
-from nevow import rend, loaders, tags
+from nevow import rend, loaders
 import atomat
 from atomat import rst2entry
 
@@ -45,9 +45,6 @@ class Atom(rend.Page):
 
     def data_feed(self, ctx, data):
         return readFeed(self.path)
-
-    def render_dom(self, ctx, data):
-        return ctx.tag.clear()[tags.xml(data.dom.toxml())]
 
     def render_timestamp(self, ctx, data):
         return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%SZ')]

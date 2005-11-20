@@ -1,6 +1,6 @@
 from zope.interface import Interface, Attribute, Invalid, invariant
 import datetime
-from nevow import inevow, accessors, compy
+from nevow import inevow, accessors, compy, flat, tags
 
 class RequiredAttributeMissingError(Invalid):
     """Missing required attribute"""
@@ -120,6 +120,15 @@ class IText(Interface):
     #### required
     dom = Attribute("DOM tree of document ready to be inlined.")
     invariant(required('dom'))
+
+def flattenIText(orig, ctx):
+    assert orig.dom.nodeType == orig.dom.ELEMENT_NODE
+    assert orig.dom.namespaceURI == 'http://www.w3.org/1999/xhtml'
+    assert orig.dom.nodeName == 'div'
+
+    for node in orig.dom.childNodes:
+        yield tags.xml(node.toxml())
+flat.registerFlattener(flattenIText, IText)
 
 class IContent(Interface):
     """
