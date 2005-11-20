@@ -3,7 +3,7 @@
       xmlns:nevow="http://nevow.com/ns/nevow/0.1"
       nevow:render="mapping" nevow:data="feed">
 
-  <title>Tv's Cobweb</title>
+  <title><nevow:slot name="title"/></title>
   <link href="http://tv.debian.net/"/>
   <updated><nevow:slot name="updated"/></updated>
   <author>

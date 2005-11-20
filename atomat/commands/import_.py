@@ -29,6 +29,7 @@ class Atom(rend.Page):
     def data_feed(self, ctx, data):
         return {'updated': '2005-10-21T18:30:02Z',
                 'entries': readEntries(self.src),
+                'title': "Tv's Cobweb",
                 }
 
     def render_dom(self, ctx, data):
