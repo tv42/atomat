@@ -19,6 +19,9 @@
       <id nevow:render="data" nevow:data="id">TODO</id>
       <title nevow:render="data" nevow:data="title">TODO</title>
       <updated nevow:render="timestamp" nevow:data="updated">TODO</updated>
+      <nevow:invisible nevow:render="if" nevow:data="published">
+	<published nevow:pattern="True" nevow:render="timestamp"/>
+      </nevow:invisible>
       <content type="xhtml">
 	<div xmlns="http://www.w3.org/1999/xhtml" nevow:render="data" nevow:data="content">
 	  Entry content goes here, as <em>XHTML</em>.
