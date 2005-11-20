@@ -16,7 +16,11 @@ class Blackbox(unittest.TestCase):
 
     def check(self, name):
         path = os.path.split(os.path.abspath(__file__))[0]
-        main.main(['import', os.path.join(path, name)])
+        d = main.main(['import', os.path.join(path, name)])
+        d.addCallback(self._check_result, name, path)
+        return d
+
+    def _check_result(self, dummy, name, path):
         self.output.close()
 
         filename = os.path.join(
@@ -34,5 +38,5 @@ class Blackbox(unittest.TestCase):
                            + "\nGOT--------------------\n%s") \
                           % (name, want, got))
 
-    def testSimple(self):
-        self.check('import_simple')
+    def test_simple(self):
+        return self.check('import_simple')
