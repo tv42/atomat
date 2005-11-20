@@ -1,5 +1,5 @@
 from twisted.trial import unittest
-import os
+import os, difflib
 from atomat import main
 from atomat.commands import import_
 
@@ -35,8 +35,14 @@ class Blackbox(unittest.TestCase):
         self.assertEquals(got, want,
                           ("File content does not match for %s"
                            + "\nWANTED-----------------\n%s"
-                           + "\nGOT--------------------\n%s") \
-                          % (name, want, got))
+                           + "\nGOT--------------------\n%s"
+                           + "\nDIFF-------------------\n%s") \
+                          % (name, want, got,
+                             '\n'.join(difflib.unified_diff(want.splitlines(),
+                                                            got.splitlines(),
+                                                            fromfile=atomfile,
+                                                            tofile=filename,
+                                                            lineterm=''))))
 
     def test_simple(self):
         return self.check('import_simple')
