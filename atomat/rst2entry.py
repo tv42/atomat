@@ -91,6 +91,10 @@ def convertString(rst, **kw):
                               'email': address,
                               }
 
+    tags = metadata.pop('tags', '').split(None)
+    if tags:
+        metadata['category'] = tags
+
     xhtmlutil.removeClass(doc, 'document')
 
     newdoc = xml.dom.getDOMImplementation().createDocument(

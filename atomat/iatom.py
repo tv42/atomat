@@ -184,7 +184,9 @@ class IEntry(Interface):
 
 
     #### optional
-    #TODO category
+    category = Attribute("A Set of categories, where each category is a string.")
+    #TODO support scheme and label in categories
+
     #TODO contributor
     #TODO published
     #TODO source

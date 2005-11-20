@@ -35,6 +35,12 @@
 	  Entry content goes here, as <em>XHTML</em>.
 	</div>
       </content>
+      <nevow:invisible nevow:render="if" nevow:data="category">
+	<nevow:invisible nevow:pattern="True"
+			 nevow:render="sequence">
+	  <category nevow:pattern="item"><nevow:attr name="term" nevow:render="data" /></category>
+	</nevow:invisible>
+      </nevow:invisible>
     </entry>
   </nevow:invisible>
 
