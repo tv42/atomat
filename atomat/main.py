@@ -50,14 +50,14 @@ def main(args, appname=None):
     return d
 
 def runApp(*a, **kw):
-    def cb():
+    d = main(*a, **kw)
+    d.addErrback(log.err)
+    def cb(d):
         """
         Delay things so that if d triggers immediately,
         reactor.stop is not called before reactor.run.
         """
-        d = main(*a, **kw)
-        d.addErrback(log.err)
         d.addBoth(lambda _: reactor.stop())
-    reactor.callLater(0, cb)
+    reactor.callLater(0, cb, d)
     reactor.run()
 
