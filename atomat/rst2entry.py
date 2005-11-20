@@ -60,13 +60,13 @@ def convertString(rst, **kw):
 
             bodyElem = xhtmlutil.only(field.getElementsByTagName('td'))
 
-            # if what is left is a single <a>, the content is a URL,
-            # autolinkified by reStructuredText. Grab it's contents
-            # but not the <a>
-            if (len(bodyElem.childNodes) == 1
-                and bodyElem.firstChild.nodeType == bodyElem.ELEMENT_NODE
-                and bodyElem.firstChild.tagName == 'a'):
-                bodyElem = bodyElem.firstChild
+            # undo automatic link creation by reStructuredText
+            for node in bodyElem.childNodes:
+                if (node.nodeType == bodyElem.ELEMENT_NODE
+                    and node.tagName == 'a'):
+                    while node.hasChildNodes():
+                        bodyElem.insertBefore(node.firstChild, node)
+                    bodyElem.removeChild(node)
 
             body = xhtmlutil.getNodeContentsAsText(bodyElem)
 
