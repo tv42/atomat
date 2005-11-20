@@ -53,12 +53,12 @@ def convertString(rst, **kw):
     # kill .docinfo, but store the data
     metadata = {}
     for docinfo in xhtmlutil.getElementsByClass(doc, 'docinfo'):
-        for field in xhtmlutil.getElementsByClass(docinfo, 'field'):
+        for field in docinfo.getElementsByTagName('tr'):
             nameElem = xhtmlutil.only(xhtmlutil.getElementsByClass(field, 'docinfo-name'))
             name = xhtmlutil.getNodeContentsAsText(nameElem)
             name = name.rstrip(':')
 
-            bodyElem = xhtmlutil.only(xhtmlutil.getElementsByClass(field, 'field-body'))
+            bodyElem = xhtmlutil.only(field.getElementsByTagName('td'))
 
             # if what is left is a single <a>, the content is a URL,
             # autolinkified by reStructuredText. Grab it's contents
@@ -70,7 +70,7 @@ def convertString(rst, **kw):
 
             body = xhtmlutil.getNodeContentsAsText(bodyElem)
 
-            metadata[name] = body
+            metadata[name.lower()] = body
         docinfo.parentNode.removeChild(docinfo)
 
     for attr in ['updated', 'published']:
