@@ -53,6 +53,14 @@ class Atom(rend.Page):
         r=context.tag.allPatterns(str(bool(data)))
         return context.tag.clear()[r]
 
+    def render_if_isUpdated(self, ctx, data):
+        published = getattr(data, 'published', None)
+        if published is None:
+            r = False
+        else:
+            r = (published != data.updated)
+        return self.render_if(ctx, r)
+
 OUTPUT = sys.stdout
 
 class Import(usage.Options):
