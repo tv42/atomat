@@ -4,11 +4,14 @@ from nevow import rend, loaders
 import atomat
 from atomat import rst2entry
 
+def badFilename(filename):
+    return (filename.startswith('.')
+            or filename.startswith('#')
+            or filename.startswith('_'))
+
 def readEntries(path, feedId):
     for filename in os.listdir(path):
-        if (filename.startswith('.')
-            or filename.startswith('#')
-            or filename.startswith('_')):
+        if badFilename(filename):
             continue
         if not filename.endswith('.rst'):
             continue
