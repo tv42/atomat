@@ -49,9 +49,14 @@ def main(args, appname=None):
     d = defer.maybeDeferred(opts.run)
     return d
 
+_exitStatus = 0
 def runApp(*a, **kw):
     d = main(*a, **kw)
-    d.addErrback(log.err)
+    def eb(fail):
+        log.err(fail)
+        global _exitStatus
+        _exitStatus = 1
+    d.addErrback(eb)
     def cb(d):
         """
         Delay things so that if d triggers immediately,
@@ -60,4 +65,4 @@ def runApp(*a, **kw):
         d.addBoth(lambda _: reactor.stop())
     reactor.callLater(0, cb, d)
     reactor.run()
-
+    sys.exit(_exitStatus)
