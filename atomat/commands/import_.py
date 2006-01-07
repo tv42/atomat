@@ -9,19 +9,38 @@ def badFilename(filename):
             or filename.startswith('#')
             or filename.startswith('_'))
 
+def walk(path):
+    filenames = []
+    dirnames = []
+    for f in os.listdir(path):
+        if os.path.isdir(os.path.join(path, f)):
+            dirnames.append(f)
+        else:
+            filenames.append(f)
+    yield '.', dirnames, filenames
+    for dirname in dirnames:
+        for dirname2, dirs2, files2 in walk(os.path.join(path, dirname)):
+            prefix = dirname
+            if dirname2 != '.':
+                prefix = os.path.join(prefix, dirname2)
+            yield prefix, dirs2, files2
+
+
 def readEntries(path, feedId):
-    for dirname, dirs, files in os.walk(path):
+    for dirname, dirs, files in walk(path):
         dirs[:] = [f for f in dirs if not badFilename(f)]
         files[:] = [f for f in files
                     if (not badFilename(f)
                         and f.endswith('.rst'))]
         for filename in files:
-            f = file(os.path.join(dirname, filename))
+            f = file(os.path.join(path, dirname, filename))
             s = f.read()
             f.close()
             x = rst2entry.convertString(
                 s,
-                id='%s#%s' % (feedId, filename[:-len('.rst')]))
+                id='%s#%s' % (feedId,
+                              '%s_%s' % (dirname.replace('/', '-'),
+                                         filename[:-len('.rst')])))
             yield x
  
 def readFeed(path):
