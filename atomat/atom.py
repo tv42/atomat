@@ -34,11 +34,15 @@ class Entry(object):
         self.updated = kw.pop('updated')
 
         for attr in ['author', 'content', 'link', 'summary',
-                     'category', 'contributor', 'published',
+                     'contributor', 'published',
                      'source', 'rights']:
             val = kw.pop(attr, None)
             if val is not None:
                 setattr(self, attr, val)
+
+        category = kw.pop('category', None)
+        if category is not None:
+            self.category = sets.Set(category)
 
     def __repr__(self):
         attrs = []
