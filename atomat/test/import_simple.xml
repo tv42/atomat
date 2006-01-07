@@ -21,6 +21,7 @@
       <content type="xhtml">
 	<div xmlns="http://www.w3.org/1999/xhtml">bar</div>
       </content>
+      
     </entry><entry>
       <id>http://example.com/~jdoe/blog#2005-09-30_foo</id>
       <title>Foo</title>
@@ -30,6 +31,7 @@
       <content type="xhtml">
 	<div xmlns="http://www.w3.org/1999/xhtml">foo</div>
       </content>
+      
     </entry>
 
 </feed>
