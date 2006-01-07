@@ -10,16 +10,20 @@ def badFilename(filename):
             or filename.startswith('_'))
 
 def readEntries(path, feedId):
-    for filename in os.listdir(path):
-        if badFilename(filename):
-            continue
-        if not filename.endswith('.rst'):
-            continue
-        f = file(os.path.join(path, filename))
-        s = f.read()
-        f.close()
-        yield rst2entry.convertString(s, id='%s#%s' % (feedId, filename[:-len('.rst')]))
-
+    for dirname, dirs, files in os.walk(path):
+        dirs[:] = [f for f in dirs if not badFilename(f)]
+        files[:] = [f for f in files
+                    if (not badFilename(f)
+                        and f.endswith('.rst'))]
+        for filename in files:
+            f = file(os.path.join(dirname, filename))
+            s = f.read()
+            f.close()
+            x = rst2entry.convertString(
+                s,
+                id='%s#%s' % (feedId, filename[:-len('.rst')]))
+            yield x
+ 
 def readFeed(path):
     f = file(os.path.join(path, '_feed.rst'))
     s = f.read()
