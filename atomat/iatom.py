@@ -134,6 +134,9 @@ class EntrySetContainer(accessors.ListContainer):
         else:
             return accessors.ListContainer.child(self, context, name)
 
+    def __iter__(self):
+        return iter(self.original)
+
 class FeedContainer(accessors.ObjectContainer):
     def child(self, ctx, name):
         if name == 'entries':
