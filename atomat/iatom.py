@@ -116,6 +116,33 @@ class IFeed(Interface):
     #### entries
     entries = Attribute("A Set of IEntry objects.")
 
+class EntrySetContainer(accessors.ListContainer):
+    def __init__(self, *a, **kw):
+        accessors.ListContainer.__init__(self, *a, **kw)
+        self.original = list(self.original)
+
+    def child(self, context, name):
+        if name == 'sorted':
+            l = self.original[:]
+            l.sort()
+            return l
+        elif name == 'reversed':
+            l = self.original[:]
+            l.sort()
+            l.reverse()
+            return l
+        else:
+            return accessors.ListContainer.child(self, context, name)
+
+class FeedContainer(accessors.ObjectContainer):
+    def child(self, ctx, name):
+        if name == 'entries':
+            return EntrySetContainer(self.original.entries)
+        else:
+            return accessors.ObjectContainer.child(self, ctx, name)
+
+compy.registerAdapter(FeedContainer, IFeed, inevow.IContainer)
+
 class IText(Interface):
     #### required
     dom = Attribute("DOM tree of document ready to be inlined.")
@@ -155,6 +182,41 @@ class ILinkedContent(IContent):
     #### optional
     type = Attribute("Media type of content.")
 
+class ILink(Interface):
+    href = Attribute("URI of the referenced resource.")
+    invariant(required('href'))
+
+    rel = Attribute("""
+    Relationship type of this link, as a string.
+
+    One of
+
+    - 'alternate': alternate representation of the entry or feed.
+      Default.
+
+    - 'enclosure': a potentially large related resource, such as podcast
+
+    - 'related': an document related to the entry or feed
+
+    - 'self': the feed itself.
+
+    - 'via': the source of the information provided in the entry.
+
+    - a full URI
+
+    """)
+
+    type = Attribute("Media type of the resource.")
+
+    hreflang = Attribute("Language of the resource.")
+
+    title = Attribute("Title of the resource.")
+
+    length = Attribute("Length of the resource, in bytes.")
+    # TODO invariant(integer('length'))
+
+compy.registerAdapter(accessors.ObjectContainer, ILink, inevow.IContainer)
+
 class IEntry(Interface):
     """An Atom 1.0 feed entry."""
 
@@ -179,7 +241,9 @@ class IEntry(Interface):
     content = Attribute("Is, or links to, the complete content of the entry.")
     invariant(mustprovide(IContent, 'content'))
 
-    #TODO link
+    link = Attribute("A Set of ILink entries.")
+    #TODO invariant at most one of each `rel` and `hreflang` combination.
+
     #TODO summary
 
 
@@ -192,4 +256,18 @@ class IEntry(Interface):
     #TODO source
     #TODO rights
 
-compy.registerAdapter(accessors.ObjectContainer, IEntry, inevow.IContainer)
+class LinkSetContainer(accessors.ListContainer):
+    def child(self, context, name):
+        for link in self.original:
+            if link.rel == name:
+                return link
+        return accessors.ListContainer.child(self, context, name)
+
+class EntryContainer(accessors.ObjectContainer):
+    def child(self, ctx, name):
+        if name == 'link':
+            return LinkSetContainer(self.original.link)
+        else:
+            return accessors.ObjectContainer.child(self, ctx, name)
+
+compy.registerAdapter(EntryContainer, IEntry, inevow.IContainer)

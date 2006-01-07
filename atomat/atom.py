@@ -1,5 +1,5 @@
 from zope.interface import implements
-import sets
+import sets, re
 from atomat import iatom
 
 class XHTMLContent(object):
@@ -9,6 +9,38 @@ class XHTMLContent(object):
 
     def __init__(self, dom):
         self.dom = dom
+
+class Link(object):
+    implements(iatom.ILink)
+
+    href = None
+    RELATIONSHIPS = sets.ImmutableSet(['alternate',
+                                       'enclosure',
+                                       'related',
+                                       'self',
+                                       'via'])
+    FULL_URI_RE = re.compile('^[a-z]+:')
+    rel = 'alternate'
+    type = None
+    hreflang = None
+    title = None
+    length = None
+
+    def __init__(self, **kw):
+        self.href = kw.pop('href')
+
+        rel = kw.pop('rel', None)
+        if rel is not None:
+            assert (rel in self.RELATIONSHIPS
+                    or self.FULL_URI_RE.match(rel))
+            self.rel = rel
+
+        for a in ['type', 'hreflang', 'title', 'length']:
+            v = kw.pop(a, None)
+            if v is not None:
+                setattr(self, a, v)
+
+        super(Link, self).__init__(**kw)
 
 class Entry(object):
     implements(iatom.IEntry)
@@ -111,3 +143,44 @@ class Entry(object):
 
     def __ne__(self, other):
         return not (self==other)
+
+class Feed(object):
+    implements(iatom.IFeed)
+
+    id = None
+    title = None
+    updated = None
+
+    author = None
+    link = None
+    category = None
+    contributor = None
+    generator = None
+    icon = None
+    logo = None
+    rights = None
+    subtitle = None
+
+    def __init__(self, **kw):
+        for a in ['id',
+                  'title',
+                  'updated']:
+            v = kw.pop(a)
+            setattr(self, a, v)
+
+        entries = kw.pop('entries')
+        self.entries = sets.Set(entries)
+
+        for a in ['author',
+                  'link',
+                  'category',
+                  'contributor',
+                  'generator',
+                  'icon',
+                  'logo',
+                  'rights',
+                  'subtitle']:
+            v = kw.pop(a, None)
+            if v is not None:
+                setattr(self, a, v)
+

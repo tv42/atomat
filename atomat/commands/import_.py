@@ -1,8 +1,8 @@
-import sys, os
+import sys, os, sets
 from twisted.python import usage
 from nevow import rend, loaders
 import atomat
-from atomat import rst2entry
+from atomat import rst2entry, atom
 
 def badFilename(filename):
     return (filename.startswith('.')
@@ -36,24 +36,37 @@ def readEntries(path, feedId):
             f = file(os.path.join(path, dirname, filename))
             s = f.read()
             f.close()
+
+            href = os.path.join(dirname,
+                                (os.path.splitext(filename)[0]
+                                 + os.path.extsep
+                                 + 'html'))
+            link = atom.Link(href=href)
+
+            id_ = ''
+            if dirname != '.':
+                id_ += dirname.replace('/', '-')+'_'
+            id_ += filename[:-len('.rst')]
+            id_ = '%s#%s' % (feedId, id_)
+
             x = rst2entry.convertString(
                 s,
-                id='%s#%s' % (feedId,
-                              '%s_%s' % (dirname.replace('/', '-'),
-                                         filename[:-len('.rst')])))
+                id=id_,
+                link=sets.Set([link]))
             yield x
  
 def readFeed(path):
     f = file(os.path.join(path, '_feed.rst'))
     s = f.read()
     f.close()
-    atom = rst2entry.convertString(s)
-    atom.entries = list(readEntries(path, atom.id))
-    # newest-first is often wanted for website output,
-    # so let's just default to that
-    atom.entries.sort()
-    atom.entries.reverse()
-    return atom
+    fake = rst2entry.convertString(s)
+    kw = {}
+    for k in dir(fake):
+        v = getattr(fake, k)
+        kw[k] = v
+    feed = atom.Feed(entries=readEntries(path, fake.id),
+                     **kw)
+    return feed
 
 class Atom(rend.Page):
     docFactory = loaders.xmlfile('feed.xml',
@@ -85,6 +98,16 @@ class Atom(rend.Page):
             r = False
         else:
             r = (published != data.updated)
+        return self.render_if(ctx, r)
+
+    def render_if_hasAlternateLink(self, ctx, data):
+        links = getattr(data, 'link', None)
+        r = False
+        if links is not None:
+            for link in links:
+                if getattr(link, 'rel', None) == 'alternate':
+                    r = True
+                    break
         return self.render_if(ctx, r)
 
 OUTPUT = sys.stdout
