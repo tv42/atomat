@@ -1,4 +1,5 @@
 import os
+import urlparse
 from docutils.core import publish_string
 from docutils import utils
 from xml.dom import minidom
@@ -179,6 +180,17 @@ def convertString(rst, filename=None, **kw):
 
     while doc.firstChild is not None:
         newdoc.firstChild.appendChild(doc.firstChild)
+
+    # fix the links; otherwise foo/bar.rst saying <a href="quux">
+    # will link to quux, not foo/quux
+    for a in newdoc.firstChild.getElementsByTagName('a'):
+        href = a.getAttribute('href')
+        if href.startswith('#'):
+            continue
+        href = urlparse.urljoin(filename, href)
+
+        a.setAttribute('href', href)
+
     content = atom.XHTMLContent(newdoc.firstChild)
 
     kw.update(metadata)
