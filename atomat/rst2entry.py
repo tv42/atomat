@@ -60,6 +60,38 @@ comment.content = 1
 rst.directives.register_directive('comment', comment)
 
 
+def blockquote(name, arguments, options, content, lineno,
+               content_offset, block_text, state, state_machine):
+    # TODO want to put options['cite'] in <blockquote cite="...">
+    q = nodes.block_quote('')
+    for text in content:
+        # TODO use nested_parse to allow rst markup inside of the
+        # blockquote
+        q += nodes.Text(text)
+
+    if options['author']:
+        addr = nodes.Element()
+        if options['cite']:
+            addr += nodes.raw('', '<a href="', format='html')
+            addr += nodes.Text(options['cite'])
+            addr += nodes.raw('', '">', format='html')
+        addr += nodes.Text(options['author'])
+        if options['cite']:
+            addr += nodes.raw('', '</a>', format='html')
+        q += nodes.raw('', '<address>', format='html')
+        q += addr.children
+        q += nodes.raw('', '</address>', format='html')
+
+    return [q]
+blockquote.arguments = (0, 0, True)
+blockquote.options = dict(cite=rst.directives.uri,
+                          author=str,
+                          )
+blockquote.content = True
+
+rst.directives.register_directive('blockquote', blockquote)
+
+
 def convertString(rst, filename=None, **kw):
     """Convert reStructuredText to iatom.IEntry."""
 
