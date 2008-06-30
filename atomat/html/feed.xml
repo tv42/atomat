@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"
-      xmlns:nevow="http://nevow.com/ns/nevow/0.1"
-      nevow:data="feed">
+      xmlns:nevow="http://nevow.com/ns/nevow/0.1">
 
   <title nevow:render="data" nevow:data="title">TODO</title>
   <nevow:invisible nevow:render="if" nevow:data="link">

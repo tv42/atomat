@@ -74,17 +74,6 @@ class Atom(rend.Page):
         os.path.split(os.path.abspath(atomat.__file__))[0],
         'html'))
 
-    path = None
-
-    def __init__(self, **kwargs):
-        path = kwargs.pop('path', None)
-        if path is not None:
-            self.path = path
-        super(Atom, self).__init__(**kwargs)
-
-    def data_feed(self, ctx, data):
-        return readFeed(self.path)
-
     def render_timestamp(self, ctx, data):
         return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%SZ')]
 
@@ -132,15 +121,13 @@ class Import(usage.Options):
         OUTPUT.write('\n') # I want a final newline in there.
 
     def run(self):
-        kwargs = {
-            'path': self.path,
-            }
-
+        kwargs = {}
         template = self.get('template', None)
         if template is not None:
             kwargs['docFactory'] = loaders.xmlfile(template)
 
-        a = Atom(**kwargs)
+        feed = readFeed(self.path)
+        a = Atom(feed, **kwargs)
         d = a.renderString()
         d.addCallback(self._print)
         return d
