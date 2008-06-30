@@ -49,7 +49,7 @@
 	<nevow:invisible nevow:render="if" nevow:data="category">
 	  <nevow:invisible nevow:pattern="True"
 			   nevow:render="sequence">
-	    <category nevow:pattern="item"><nevow:attr name="term" nevow:render="data" /></category>
+	    <category nevow:pattern="item"><nevow:attr name="term" nevow:render="data" /><nevow:attr name="label" nevow:render="data" /></category>
 	  </nevow:invisible>
 	</nevow:invisible>
       </entry>
