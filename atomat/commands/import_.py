@@ -82,7 +82,7 @@ class Atom(rend.Page):
         )
 
     def render_timestamp(self, ctx, data):
-        return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%SZ')]
+        return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%S+00:00')]
 
     def render_if(self, context, data):
         r=context.tag.allPatterns(str(bool(data)))
