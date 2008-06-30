@@ -20,6 +20,17 @@
       <entry nevow:pattern="item">
 	<id nevow:render="data" nevow:data="id">TODO</id>
 	<title nevow:render="data" nevow:data="title">TODO</title>
+	<nevow:invisible nevow:render="if" nevow:data="link">
+	  <nevow:invisible nevow:pattern="True" nevow:render="sequence">
+	    <link nevow:pattern="item"><nevow:attr name="rel" nevow:render="data" nevow:data="rel"
+	    /><nevow:attr name="type" nevow:render="data" nevow:data="type"
+	    /><nevow:attr name="href" nevow:render="data" nevow:data="href"
+	    /><!--nevow:attr name="hreflang" nevow:render="data" nevow:data="hreflang"
+	    /--><!--nevow:attr name="title" nevow:render="data" nevow:data="title"
+	    /--><!--nevow:attr name="length" nevow:render="data" nevow:data="length"
+	    /--></link>
+	  </nevow:invisible>
+	</nevow:invisible>
 	<nevow:invisible nevow:render="if" nevow:data="author">
 	  <author nevow:pattern="True">
 	    <name nevow:render="data" nevow:data="name">Firstname Lastname</name>

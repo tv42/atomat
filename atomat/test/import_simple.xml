@@ -13,6 +13,7 @@
     <entry>
 	<id>http://example.com/~jdoe/blog#2005-10-21_bar</id>
 	<title>Bar</title>
+	<link href="2005-10-21_bar.html" type="text/html" rel="alternate" />
 	<author>
 	    <name>Jack Smith</name>
 	    <email>jack@example.org</email>
@@ -26,6 +27,7 @@
       </entry><entry>
 	<id>http://example.com/~jdoe/blog#2005-09-30_foo</id>
 	<title>Foo</title>
+	<link href="2005-09-30_foo.html" type="text/html" rel="alternate" />
 	
 	<updated>2005-09-30T12:03:00Z</updated>
 	

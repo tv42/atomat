@@ -38,11 +38,13 @@ def readEntries(path, feedId):
             s = f.read()
             f.close()
 
-            href = os.path.join(dirname,
-                                (os.path.splitext(filename)[0]
-                                 + os.path.extsep
-                                 + 'html'))
-            link = atom.Link(href=href)
+            href = (os.path.splitext(filename)[0]
+                    + os.path.extsep
+                    + 'html')
+            if dirname != '.':
+                href = os.path.join(dirname, href)
+
+            link = atom.Link(href=href, type='text/html')
 
             id_ = ''
             if dirname != '.':
@@ -71,10 +73,13 @@ def readFeed(path):
     return feed
 
 class Atom(rend.Page):
-    docFactory = loaders.xmlfile('feed.xml',
-                templateDir=os.path.join(
-        os.path.split(os.path.abspath(atomat.__file__))[0],
-        'html'))
+    docFactory = loaders.xmlfile(
+        'feed.xml',
+        templateDir=os.path.join(
+            os.path.split(os.path.abspath(atomat.__file__))[0],
+            'html'),
+        ignoreComment=True,
+        )
 
     def render_timestamp(self, ctx, data):
         return ctx.tag.clear()[data.strftime('%Y-%m-%dT%H:%M:%SZ')]

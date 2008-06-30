@@ -266,6 +266,9 @@ class LinkSetContainer(accessors.ListContainer):
                 return link
         return accessors.ListContainer.child(self, context, name)
 
+    def __iter__(self):
+        return iter(self.original)
+
 class EntryContainer(accessors.ObjectContainer):
     def child(self, ctx, name):
         if name == 'link':
