@@ -33,7 +33,8 @@ def readEntries(path, feedId):
                     if (not badFilename(f)
                         and f.endswith('.rst'))]
         for filename in files:
-            f = file(os.path.join(path, dirname, filename))
+            p = os.path.join(path, dirname, filename)
+            f = file(p)
             s = f.read()
             f.close()
 
@@ -51,6 +52,7 @@ def readEntries(path, feedId):
 
             x = rst2entry.convertString(
                 s,
+                filename=p,
                 id=id_,
                 link=sets.Set([link]))
             yield x

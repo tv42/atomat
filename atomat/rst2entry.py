@@ -60,10 +60,11 @@ comment.content = 1
 rst.directives.register_directive('comment', comment)
 
 
-def convertString(rst, **kw):
+def convertString(rst, filename=None, **kw):
     """Convert reStructuredText to iatom.IEntry."""
 
     html = publish_string(source=rst,
+                          source_path=filename,
                           writer_name='html',
                           settings_overrides={'input_encoding': 'utf-8',
                                               'output_encoding': 'utf-8',
