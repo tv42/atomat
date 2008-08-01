@@ -2,7 +2,7 @@
 
   <title>Test feed</title>
   <link href="http://example.com/~jdoe/blog/atom.xml" rel="self" />
-  <updated>2005-10-21T18:30:02Z</updated>
+  <updated>2005-10-21T18:30:02+00:00</updated>
   <author>
     <name>John Doe</name>
     <email>jdoe@example.com</email>
@@ -11,26 +11,26 @@
 
   
     <entry>
-	<id>http://example.com/~jdoe/blog#2005-10-21_bar</id>
 	<title>Bar</title>
+	<id>http://example.com/~jdoe/blog#2005-10-21_bar</id>
 	<link href="2005-10-21_bar.html" type="text/html" rel="alternate" />
 	<author>
 	    <name>Jack Smith</name>
 	    <email>jack@example.org</email>
 	  </author>
-	<updated>2005-10-21T18:30:02Z</updated>
-	<published>2005-10-21T18:02:00Z</published>
+	<published>2005-10-21T18:02:00+00:00</published>
+	<updated>2005-10-21T18:30:02+00:00</updated>
 	<content type="xhtml">
 	  <div xmlns="http://www.w3.org/1999/xhtml">bar</div>
 	</content>
 	
       </entry><entry>
-	<id>http://example.com/~jdoe/blog#2005-09-30_foo</id>
 	<title>Foo</title>
+	<id>http://example.com/~jdoe/blog#2005-09-30_foo</id>
 	<link href="2005-09-30_foo.html" type="text/html" rel="alternate" />
 	
-	<updated>2005-09-30T12:03:00Z</updated>
 	
+	<updated>2005-09-30T12:03:00+00:00</updated>
 	<content type="xhtml">
 	  <div xmlns="http://www.w3.org/1999/xhtml">foo</div>
 	</content>
