@@ -1,0 +1,16 @@
+Batch manipulation of Atom feed files
+=====================================
+
+(yes, the name is a pun on "automate")
+
+
+Features
+--------
+
+- *import*: Convert tree of files to Atom
+
+- *export*: Convert Atom feed to static HTML tree
+
+- *split*: Split one feed to multiple by categories
+
+- *torss*: Convert Atom to RSS (what versions of RSS?)

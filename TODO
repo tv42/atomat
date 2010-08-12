@@ -1,0 +1,1 @@
+update feed.updated to be max([entry.updated for entry in feed])
