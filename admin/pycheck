@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+
+find atomat twisted/plugins bin -name '*.py' \! -name '.*' -print0 \
+| xargs -0 --no-run-if-empty -- pychecker

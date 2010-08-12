@@ -1,0 +1,16 @@
+#!/bin/sh
+set -e
+trial --coverage=coverage atomat
+
+TOTAL="$(find _trial_temp/coverage -name 'atomat.*.cover' -print0 \
+	| xargs -0 -- cat -- \
+	| grep -vc '^[[:space:]]*$')"
+COVERED="$(find _trial_temp/coverage -name 'atomat.*.cover' -print0 \
+	| xargs -0 -- cat -- \
+	| grep -v '^[[:space:]]*$' \
+	| grep -vc '^>>>>>>')"
+
+echo "$COVERED / $TOTAL = $(expr '(' 100 '*' "$COVERED" ')' / "$TOTAL")%"
+
+less -MS +'/^>>>>>>' \
+	$(find _trial_temp/coverage -name 'atomat.*.cover' \! -empty)

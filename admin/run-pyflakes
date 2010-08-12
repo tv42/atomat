@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+export PYTHONPATH=~/src/pyflakes/trunk
+find atomat twisted/plugins bin -name '*.py' \! -name '.*' -print0 \
+| xargs -0 --no-run-if-empty -- ~/src/pyflakes/trunk/bin/pyflakes
